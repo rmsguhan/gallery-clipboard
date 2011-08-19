@@ -1,0 +1,6 @@
+The ClipBoard class is designed to be a node plugin and a wrapper over the flash movie
+to copy text contents to the OS clipboard. The class will place the flash movie below the given
+node so that a user action can trigger the copy of contents to the OS clip board using
+Flash's System.setClipboard method. Starting from flash 10, the clipboard can be set only
+off a user initiated event. So the JS class shall only set the string to be copied and will
+allow the flash movie's event to capture the user action and set the clipboard contents.
