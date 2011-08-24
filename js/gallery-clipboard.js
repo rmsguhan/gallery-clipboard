@@ -35,6 +35,22 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+
+    /**
+     * The ClipBoard class is desinged to be a node plugin and a wrapper over the flash movie
+     * to copy text contents to the OS clipboard. The class will place the flash movie below the given
+     * node so that a user action can trigger the copy of contents to the OS clip board using
+     * Flash's System.setClipboard method. Starting from flash 10, the clipboard can be set only
+     * off a user initiated event. So the JS class shall only set the string to be copied and will
+     * allow the flash movie's event to capture the user action and set the clipboard contents
+     * @class ClipBoard
+     * @constructor
+     * @extends Y.Plugin.Base
+     */
+    function ClipBoard(config) {
+        ClipBoard.superclass.constructor.apply(this, arguments);
+    }
+    
     /**
      * Template for embedding the flash movie in the object tag. Mainly for IE browsers
      * @property OBJECT_TEMPLATE
@@ -108,22 +124,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         unsetCache        = function(id, ev) {
             delete flashEventCache[id][ev];
         };
-        
-        
-    /**
-     * The ClipBoard class is desinged to be a node plugin and a wrapper over the flash movie
-     * to copy text contents to the OS clipboard. The class will place the flash movie below the given
-     * node so that a user action can trigger the copy of contents to the OS clip board using
-     * Flash's System.setClipboard method. Starting from flash 10, the clipboard can be set only
-     * off a user initiated event. So the JS class shall only set the string to be copied and will
-     * allow the flash movie's event to capture the user action and set the clipboard contents
-     * @class ClipBoard
-     * @constructor
-     * @extends Y.Plugin.Base
-     */
-    function ClipBoard(config) {
-        ClipBoard.superclass.constructor.apply(this, arguments);
-    }
     
     ClipBoard.NAME = COMPONENT_NAME;
     ClipBoard.NS   = COMPONENT_NAME;
