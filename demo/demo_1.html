@@ -39,7 +39,7 @@
     .control {
         width:450px;
         position:absolute;
-        top:100px;
+        top:160px;
         left:350px;
     }
 </style>
@@ -48,14 +48,18 @@
     <div class='container'>
         <h1 id='title'>Flash clipboard copy demo</h1>
         <cite>This demo showcases the ability to create a YUI node and plugin the flash based
-        copy to clipboard functionality. The clipboard copy is implemented as a node plugin</cite>
+        copy to clipboard functionality. The clipboard copy is implemented as a node plugin.
+        The clipboard support allows for attaching any event on the flash movie, so you can setup
+        the node to copy the string even on keydown or 'enter'. 'enter' is a custom event created inside
+        the falsh movie, so from JS you can setup to happen on 'enter'</cite>
         <hr>
-        <div class='button b1'>Some content 1</div>
-        <div class='button b2'>Some content 2</div>
+        <div class='button b1'>To see a world in a grain of sand</div>
+        <div class='button b2'>Hold infinity in the palm of your hand</div>
+        <h2></h2>
     </div>
     <div class='control'>
-        <input type='button' class='keyUp' node = 'b1' value='Node1 add Flash Enter event' />
-        <input type='button' class='remove-keyUp' node = 'b1' value='Node1 remove Flash Enter event' />
+        <!-- input type='button' class='keyUp' node = 'b1' value='Node1 add Flash Enter event' />
+        <input type='button' class='remove-keyUp' node = 'b1' value='Node1 remove Flash Enter event' /-->
         
         <input type='button' class='mouseOver' node = 'b1' value='Node1 add Flash MouseOver' />
         <input type='button' class='remove-mouseOver' node = 'b1' value='Node1 remove Flash MouseOver' />
@@ -71,12 +75,12 @@
         <input type='button' class='clear' value = 'Clear log' />
     </div>
     <script src="http://yui.yahooapis.com/3.3.0/build/yui/yui.js"></script>
-    <script src="../js/clipboard-plugin.js"></script>
+    <script src="../js/gallery-clipboard.js"></script>
     
     <script type='text/javascript'>
     document.title = document.getElementById("title").innerHTML;
     var MOVIE_PATH = '../assets/';
-    YUI().use('comms-ui-clipboard-plugin', function(Y) {
+    YUI().use('gallery-clipboard', function(Y) {
         
         var logit = function(str) {
             var log = Y.one("#log"),
@@ -89,17 +93,17 @@
             node2 = Y.one(".b2");
             
         /* Set up Copy on Node 1 */
-        node1.plug(Y.comms.ui.ClipBoard, {
+        node1.plug(Y.ClipBoard, {
             page : Y.one(".container"),
             moviepath : MOVIE_PATH
         }).on("clipboard:load", function(e){
             logit("Flash Movie Loaded for :"+e.currentTarget.get("className"));
             this.on("mouseover", function(ev) {
                 this.setAttribute("copy", this.get("innerHTML"));
-                logit("String set for copy " + this.getAttribute("copy"));
+                logit("Press Enter to copy &quot;" + this.getAttribute("copy")+ "&quot;");
             });
             this.clipboard.setEvent("enter", function(ev) {
-                logit("Clipboard set for : "+this.get("className")+":'"+ev.clipboard+"'");
+                logit("Clipboard now contains - '"+ev.clipboard+"'");
                 this.clipboard.hide();
             }, true);
         });
@@ -107,18 +111,18 @@
             logit("ERROR :"+e.error);
         });
         /* Set up Copy on Node 2 */
-        node2.plug(Y.comms.ui.ClipBoard, {
+        node2.plug(Y.ClipBoard, {
             page : Y.one(".container"),
             moviepath : MOVIE_PATH
         }).on("clipboard:load", function(e){
             logit("Flash Movie Loaded for :"+e.currentTarget.get("className"));
             this.on("mouseover", function(ev) {
                 this.setAttribute("copy", this.get("innerHTML"));
-                logit("String set for copy " + this.getAttribute("copy"));
+                logit("Click to copy &quot;" + this.getAttribute("copy")+"&quot;");
             });
             this.clipboard.setEvent("click", function(ev) {
                 this.clipboard.hide();
-                logit("Clipboard set for : "+this.get("className")+":'"+ev.clipboard+"'");
+                logit("Clipboard now contains - '"+ev.clipboard+"'");
             }, true);
         });
         

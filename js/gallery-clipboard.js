@@ -1,3 +1,5 @@
+YUI.add('gallery-clipboard', function(Y) {
+
 /*
  Copyright (c) 2011, Yahoo! Inc.
 All rights reserved.
@@ -33,7 +35,6 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-YUI.add('gallery-clipboard-plugin', function(Y) {
     /**
      * Template for embedding the flash movie in the object tag. Mainly for IE browsers
      * @property OBJECT_TEMPLATE
@@ -270,7 +271,6 @@ YUI.add('gallery-clipboard-plugin', function(Y) {
          */
         _destructor : function() {
             var _this = this;
-            Y.log("Destructor called for "+ _this._host.get("id"));
             _this.get("boundingBox").destroy(true);
             FLASHMOVIE_LOADED = false;
             loadObj = {};
@@ -334,7 +334,6 @@ YUI.add('gallery-clipboard-plugin', function(Y) {
                 _this._movie._node.copy(str, _this.get("id"));
             } catch(e) {
                 Y.fire(COMPONENT_NAME+":error", {"error": e.message});
-                Y.log("Copy Event Error occured" + e.message);
             }
         },
         /**
@@ -368,7 +367,6 @@ YUI.add('gallery-clipboard-plugin', function(Y) {
                 }
             } catch(e) {
                 Y.fire(COMPONENT_NAME+":error", {"error": e.message});
-                Y.log("Setup Event Error occured" + e.message);
             }
             
         },
@@ -400,7 +398,6 @@ YUI.add('gallery-clipboard-plugin', function(Y) {
                 }
             } catch(e) {
                 Y.fire(COMPONENT_NAME+":error", {"error": e.message});
-                Y.log("Remove Event Error occured" + e.message);
             }
             return true;
         },
@@ -461,7 +458,6 @@ YUI.add('gallery-clipboard-plugin', function(Y) {
                 page.appendChild(wrapper);
                 movie = _this.get("page").one("#"+id);
                 loadObj.host = _this._host;
-                Y.log("Creating a new flash movie node and attaching to DOM");
             }
             this.set("boundingBox", movie.get("parentNode"));
             movie.setStyle("outline", "none");
@@ -490,10 +486,8 @@ YUI.add('gallery-clipboard-plugin', function(Y) {
                 } else {
                     Y.fire(ev, a);
                 }
-                Y.log("Flash Interface callback recieved :"+ev  );
             } catch(e) {
                 Y.fire(COMPONENT_NAME+":error", Y.mix({"error": e.message}, a));
-                Y.log("Flash Interface Error occured :" +e.message);
             }
             
             
@@ -521,7 +515,7 @@ YUI.add('gallery-clipboard-plugin', function(Y) {
         }
     });
     
-    Y.namespace("comms.ui");
-    Y.comms.ui.ClipBoard = ClipBoard;
+    Y.ClipBoard = ClipBoard;
 
-}, '0.0.1' ,{requires:['node', 'plugin', "substitute"]});
+
+}, '@VERSION@' ,{skinnable:false, requires:['node', 'plugin', 'substitute']});
