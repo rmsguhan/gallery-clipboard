@@ -151,4 +151,15 @@
                     });
                 } else {
                     /* Remove case */
-                    event = cl.substring(cl.inde
+                    event = cl.substring(cl.indexOf("-")+1);
+                    nd.clipboard.removeEvent(event);
+                    logit("Flash '"+event+"' removed for "+nd.get("className"));
+                }
+                
+            }
+        });
+    });
+        
+    </script>
+</body>
+</html>
