@@ -92,6 +92,14 @@
         var node1 = Y.one(".b1"),
             node2 = Y.one(".b2");
             
+        /* Make sure that the flash interface callback is within a known global name space */
+        window.My = {
+            Global : {
+                foo : "bar"
+            }
+        };
+        Y.ClipBoard.setCallBackGlobal( "My.Global" );
+        
         /* Set up Copy on Node 1 */
         node1.plug(Y.ClipBoard, {
             page : Y.one(".container"),
@@ -143,15 +151,4 @@
                     });
                 } else {
                     /* Remove case */
-                    event = cl.substring(cl.indexOf("-")+1);
-                    nd.clipboard.removeEvent(event);
-                    logit("Flash '"+event+"' removed for "+nd.get("className"));
-                }
-                
-            }
-        });
-    });
-        
-    </script>
-</body>
-</html>
+                    event = cl.substring(cl.inde
